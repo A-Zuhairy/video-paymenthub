@@ -61,6 +61,11 @@ export const Scene6 = () => {
             <p className="text-3xl text-gray-300 font-light">
                 Installable as a Progressive Web App (PWA)
             </p>
+            <Img
+                src={staticFile("screenshots/PWA.png")}
+                style={{ width: "100%", height: "auto" }}
+                className="max-w-md rounded-2xl shadow-2xl border border-white/10"
+            />
         </div>
 
       </div>
