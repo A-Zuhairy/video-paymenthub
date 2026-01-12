@@ -27,6 +27,7 @@ import {
 export const MainVideo = () => {
   const frame = useCurrentFrame();
   let currentFrame = 0;
+  const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" };
 
   const baseVolume = 0.9;
   const fadeOutDurationInFrames = FPS;
@@ -34,7 +35,7 @@ export const MainVideo = () => {
     frame,
     [TOTAL_DURATION - fadeOutDurationInFrames, TOTAL_DURATION],
     [baseVolume, 0],
-    { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
+    clamp
   );
 
   const scenes = [

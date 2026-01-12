@@ -15,4 +15,10 @@ export const SCENE_4_DURATION = 150; // 13-18s = 5s = 150 frames
 export const SCENE_6_DURATION = 90;  // 24-27s = 3s = 90 frames
 export const SCENE_7_DURATION = 90;  // 27-30s = 3s = 90 frames
 
-export const TOTAL_DURATION = 720;
+export const TOTAL_DURATION =
+  SCENE_1_DURATION +
+  SCENE_2_DURATION +
+  SCENE_3_DURATION +
+  SCENE_4_DURATION +
+  SCENE_6_DURATION +
+  SCENE_7_DURATION;

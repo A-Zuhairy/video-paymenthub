@@ -1,23 +1,30 @@
 import { AbsoluteFill, Img, useCurrentFrame, interpolate, staticFile } from "remotion";
-import { COLOR_PRIMARY, FONT_FAMILY } from "./constants";
+import { FONT_FAMILY, SCENE_4_DURATION } from "./constants";
 
 export const Scene4 = () => {
   const frame = useCurrentFrame();
   
-  // Fade in
-  const opacity = interpolate(frame, [0, 15], [0, 1], { extrapolateRight: "clamp" });
+  const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" };
+  const opacity = interpolate(frame, [0, 12], [0, 1], clamp);
 
-  const captionY = interpolate(frame, [10, 40], [40, 0], { extrapolateRight: "clamp" });
-  const captionOpacity = interpolate(frame, [10, 40], [0, 1], { extrapolateRight: "clamp" });
+  const captionY = interpolate(frame, [8, 34], [44, 0], clamp);
+  const captionOpacity = interpolate(frame, [8, 34], [0, 1], clamp);
  
   // Static view, same logic as Scene 3 to fit perfectly
   const browserWidth = 1400;
   const aspectRatio = 1872 / 931;
   const browserHeight = browserWidth / aspectRatio;
 
+  const windowY = interpolate(frame, [0, SCENE_4_DURATION], [10, -6], clamp);
+  const windowScale = interpolate(frame, [0, SCENE_4_DURATION], [0.99, 1.03], clamp);
+  const windowRotate = interpolate(frame, [0, SCENE_4_DURATION], [0.2, -0.2], clamp);
+
+  const chip1 = interpolate(frame, [22, 34], [0, 1], clamp);
+  const chip2 = interpolate(frame, [34, 46], [0, 1], clamp);
+  const chip3 = interpolate(frame, [46, 58], [0, 1], clamp);
+
   return (
     <AbsoluteFill style={{ backgroundColor: "#f8fafc", fontFamily: FONT_FAMILY }}>
-       {/* Premium Background */}
        <div 
         className="absolute inset-0" 
         style={{
@@ -28,14 +35,15 @@ export const Scene4 = () => {
         }}
       />
 
-       {/* Browser Window Mockup */}
        <div 
-        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 shadow-2xl rounded-xl overflow-hidden bg-white border border-gray-200/50"
+        className="absolute left-1/2 top-1/2 shadow-2xl rounded-xl overflow-hidden bg-white border border-gray-200/50"
         style={{ 
             opacity,
             width: browserWidth,
             height: browserHeight + 40,
-            boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)"
+            boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+            transform: `translate(-50%, -50%) translateY(${windowY}px) scale(${windowScale}) rotate(${windowRotate}deg)`,
+            transformOrigin: "center",
         }}
       >
         <div className="h-10 bg-white border-b border-gray-100 flex items-center px-4 space-x-4">
@@ -52,7 +60,6 @@ export const Scene4 = () => {
             </div>
         </div>
         
-        {/* Static content - no panning */}
         <div className="relative w-full h-full bg-white flex items-start justify-center overflow-hidden">
              <Img 
                 src={staticFile("screenshots/transaksi.png")}
@@ -67,6 +74,39 @@ export const Scene4 = () => {
                     e.target.parentNode.innerHTML = '<div class="flex items-center justify-center h-full text-gray-400">Transaction History Screenshot Placeholder</div>';
                 }}
              />
+        </div>
+      </div>
+
+      <div
+        className="absolute top-16 left-1/2 -translate-x-1/2 flex flex-row gap-3"
+        style={{ opacity }}
+      >
+        <div
+          className="px-4 py-2 rounded-full bg-white/80 backdrop-blur-md shadow-lg border border-white/60 text-[#004080] font-semibold"
+          style={{
+            opacity: chip1,
+            transform: `translateY(${interpolate(chip1, [0, 1], [12, 0], clamp)}px)`,
+          }}
+        >
+          Search quickly
+        </div>
+        <div
+          className="px-4 py-2 rounded-full bg-white/80 backdrop-blur-md shadow-lg border border-white/60 text-[#004080] font-semibold"
+          style={{
+            opacity: chip2,
+            transform: `translateY(${interpolate(chip2, [0, 1], [12, 0], clamp)}px)`,
+          }}
+        >
+          Filter by status
+        </div>
+        <div
+          className="px-4 py-2 rounded-full bg-white/80 backdrop-blur-md shadow-lg border border-white/60 text-[#004080] font-semibold"
+          style={{
+            opacity: chip3,
+            transform: `translateY(${interpolate(chip3, [0, 1], [12, 0], clamp)}px)`,
+          }}
+        >
+          Export records
         </div>
       </div>
 
